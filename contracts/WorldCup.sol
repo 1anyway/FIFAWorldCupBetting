@@ -54,7 +54,7 @@ contract WorldCup {
         countryToPlayers[currRound][_selected].push(msg.sender);
 
         // Update players
-        Player storage player = player[currRound][msg.sender];
+        Player storage player = players[currRound][msg.sender];
         // play.isSet = false
         player.counts[_selected] += 1;
 
@@ -77,7 +77,7 @@ contract WorldCup {
             // Get the share each address should get
             Player storage winner = players[currRound][currWinner];
             if (winner.isSet) {
-                console.log("this winner has been set already, will be skipped);
+                console.log("this winner has been set already, will be skipped");
                 continue;
             }
 
@@ -89,17 +89,17 @@ contract WorldCup {
             // 
             uint amt = (currAvalBalance / countryToPlayers[currRound][_country].length) * currCounts;
 
-            winnerValuts[currWinner] += amt;
+            winnerVaults[currWinner] += amt;
             distributeAmt += amt;
             lockedAmts += amt;
 
             console.log("winner:", currWinner, "currCounts:", currCounts);
-            console.log("reward amt curr:", amt, "total:", winnerValuts[currWinner]);
+            console.log("reward amt curr:", amt, "total:", winnerVaults[currWinner]);
         }
 
-        uint giftAmt = currAvalBalance - distirbuteAmt;
+        uint giftAmt = currAvalBalance - distributeAmt;
         if (giftAmt > 0) {
-            winnerValuts[admin] += giftAmt;
+            winnerVaults[admin] += giftAmt;
         }
 
 
